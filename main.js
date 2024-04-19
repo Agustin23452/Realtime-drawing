@@ -45,3 +45,5 @@ leftWristX = 0;
    stroke('#F90093');
    square(noseX, noseY, difference);
  }
+
+
