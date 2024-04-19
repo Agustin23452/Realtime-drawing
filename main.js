@@ -5,14 +5,14 @@ rightWristX = 0;
 leftWristX = 0;
 
  function setup() {
-    video = creatCapture(VIDEO)
+    video = createCapture(VIDEO);
     video.size(550, 500);
 
-    canvas = creatCanvas(550, 550);
+    canvas = createCanvas(550, 550);
     canvas.position(560, 150);
 
     poseNet = ml5.poseNet(video, modelLoaded);
-    poseNet.on('pose, gotPoses');
+    poseNet.on('pose', gotPoses);
  }
 
   function modelLoaded() 
@@ -25,6 +25,23 @@ leftWristX = 0;
     if(results.leght > 0)
     {
         console.log(results);
+        noseX = results[0].pose.nose.x;
+        noseY = results[0].pose.nose.y;+
+        console.log("noseX = " + noseX + "noseY =" + noseY);
+      
+        leftWristX = results[0].pose.leftWrist.x;
+        rightWristX = results[0].pose.rightWrist.x
+        difference = floor(leftWristX - rightWristX);
+
+        console.log("leftWristX = " + leftWristX + "rigtWristX = " + rightWristX + "difference = " + difference);
     }
  }
 
+ function draw() {
+   background('#9669A97');
+
+   document.getElementById("square_side").innerHTML = "El alto y ancho del cuadrado será: " + difference + "px";
+   fill('#F90093');
+   stroke('#F90093');
+   square(noseX, noseY, difference);
+ }
